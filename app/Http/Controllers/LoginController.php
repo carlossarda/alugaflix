@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TokenResource;
 use App\Http\Resources\UserResource;
+use App\Models\Token;
 use App\Models\User;
+use App\Services\TokenService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class LoginController extends Controller
 {
@@ -46,7 +50,8 @@ class LoginController extends Controller
     {
         $params = $request->all();
 
-        if (!$request->has(['email', 'passowrd'])) {
+        if (!$request->has(['email', 'password'])) {
+
             return response([], 400);
         }
 
@@ -64,10 +69,34 @@ class LoginController extends Controller
             ], 403);
         }
 
+        /** @var TokenService $tokenService */
+        $tokenService = App::make(TokenService::class);
+        $token = $tokenService->createToken($user);
+
         return response([
             'success' => true,
             'user' => new UserResource($user),
-            'token' => md5(uniqid(rand(), true))
+            'token' => new TokenResource($token)
         ],200);
+    }
+
+    public function logout(Request $request)
+    {
+        $user = $request->get('user');
+
+        $tokens = Token::where('user_id', $user->id)
+            ->where('expired', false)
+            ->get();
+
+        if (empty($tokens)) {
+            return null;
+        }
+
+        foreach ($tokens as $token) {
+            $token->expired = true;
+            $token->save();
+        }
+
+        return response(null);
     }
 }
