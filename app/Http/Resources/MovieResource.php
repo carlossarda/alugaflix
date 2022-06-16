@@ -16,7 +16,7 @@ class MovieResource extends JsonResource
     {
         return [
             'name' => $this->name,
-//            'file' => $this->file,
+            'file' => $this->file,
             'size' => $this->size,
             'tags' => !empty($this->tags) ? TagResource::collection($this->tags) : []
         ];
