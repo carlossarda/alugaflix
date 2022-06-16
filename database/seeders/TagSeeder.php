@@ -15,15 +15,18 @@ class TagSeeder extends Seeder
     public function run()
     {
         DB::table("tags")->insert([
-            "name" => "Drama"
+            "name" => "Drama",
+            "created_at" => (new \DateTime())->format('Y-m-d H:i:s')
         ]);
 
         DB::table("tags")->insert([
-            "name" => "Ação"
+            "name" => "Ação",
+            "created_at" => (new \DateTime())->format('Y-m-d H:i:s')
         ]);
 
         DB::table("tags")->insert([
-            "name" => "Policial"
+            "name" => "Policial",
+            "created_at" => (new \DateTime())->format('Y-m-d H:i:s')
         ]);
     }
 }
