@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::controller(MovieController::class)->prefix('movies')->group(function () {
+Route::controller(MovieController::class)->prefix('movies')->middleware('token')->group(function () {
     Route::get('', 'getMovies');
 
     Route::get('/{id}', function ($id) {
@@ -37,7 +37,7 @@ Route::controller(MovieController::class)->prefix('movies')->group(function () {
     Route::delete('/{id}', 'delete');
 });
 
-Route::controller(TagController::class)->prefix('tags')->group(function () {
+Route::controller(TagController::class)->prefix('tags')->middleware('token')->group(function () {
     Route::get('', function () {
         return TagResource::collection(Tag::all());
     });
@@ -52,5 +52,6 @@ Route::controller(TagController::class)->prefix('tags')->group(function () {
 
 Route::controller(LoginController::class)->prefix('login')->group(function () {
     Route::get('', 'login');
+    Route::get('/logout', 'logout')->middleware('token');
     Route::post('/create', 'createUser');
 });
