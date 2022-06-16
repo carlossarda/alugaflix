@@ -26,12 +26,10 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::controller(MovieController::class)->prefix('movies')->group(function () {
-    Route::get('', function () {
-        return MovieResource::collection(Movie::all());
-    });
+    Route::get('', 'getMovies');
 
     Route::get('/{id}', function ($id) {
-        return new MovieResource(Movie::find($id));
+        return response(new MovieResource(Movie::find($id)));
     });
 
     Route::post('/create', 'create');
