@@ -35,6 +35,8 @@ Route::controller(MovieController::class)->prefix('movies')->group(function () {
     });
 
     Route::post('/create', 'create');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'delete');
 });
 
 Route::controller(TagController::class)->prefix('tags')->group(function () {
@@ -42,11 +44,12 @@ Route::controller(TagController::class)->prefix('tags')->group(function () {
         return TagResource::collection(Tag::all());
     });
 
-    Route::get('/tags/{id}', function ($id) {
+    Route::get('/{id}', function ($id) {
         return new TagResource(Tag::find($id));
     });
 
     Route::post("/create", 'create');
+    Route::put('/update', 'update');
 });
 
 Route::controller(LoginController::class)->prefix('login')->group(function () {
