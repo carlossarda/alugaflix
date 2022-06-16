@@ -20,6 +20,7 @@
         "vue-loader": "^16.8.3"
     },
     "dependencies": {
+        "@varlet/ui": "^1.27.12",
         "vue": "^3.2.37",
         "vue-router": "^4.0.15"
     }
