@@ -69,9 +69,36 @@ class MovieController extends Controller
 //            $movie->file = $file->store('video_files');
 //        }
 
-        if (!empty($params['tags'])) {
-            var_dump($params['tags']);
-            exit;
+        if (!empty($params['tags']) && is_array($params['tags'])) {
+            foreach ($params['tags'] as $tagReq) {
+                if (empty($tagReq['id'])) {
+                    continue;
+                }
+
+                $movieTag = MovieTag::where('movie_id', $id)
+                    ->where('tag_id', $tagReq['id'])
+                    ->first();
+
+                if (!empty($movieTag)) {
+                    continue;
+                }
+
+                $movieTag = MovieTag::withTrashed()->where('movie_id', $id)
+                    ->where('tag_id', $tagReq['id'])
+                    ->first();
+
+
+                if (!empty($movieTag)) {
+                    $movieTag->restore();
+                    continue;
+                }
+
+                $movieTag = new MovieTag();
+                $movieTag->movie_id = $id;
+                $movieTag->tag_id = $tagReq['id'];
+
+                $movieTag->save();
+            }
         }
 
         $movie->saveOrFail();
