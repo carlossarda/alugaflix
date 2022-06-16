@@ -100,4 +100,9 @@ class MovieController extends Controller
 
         return response();
     }
+
+    public function getMovies()
+    {
+        return MovieResource::collection(Movie::all());
+    }
 }
