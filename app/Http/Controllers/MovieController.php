@@ -102,6 +102,29 @@ class MovieController extends Controller
         }
 
         $movie->saveOrFail();
+        $movie->refresh();
+
+        if (!empty($params['tags']) && is_array($params['tags'])) {
+            foreach ($movie->tags as $tag) {
+                $movieTag = null;
+                $found = in_array($tag->id, array_column($params['tags'], 'id'));
+
+                if ($found) {
+                    continue;
+                }
+
+                $movieTag = MovieTag::where('movie_id', $id)
+                    ->where('tag_id', $tag->id)
+                    ->first();
+
+                if (empty($movieTag)) {
+                    continue;
+                }
+
+                $movieTag->delete();
+            }
+            $movie->refresh();
+        }
 
         return response(new MovieResource($movie));
     }
