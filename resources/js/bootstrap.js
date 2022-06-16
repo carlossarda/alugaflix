@@ -27,6 +27,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: true
 // });
 import { createApp } from 'vue';
+import Varlet from '@varlet/ui';
+import '@varlet/ui/es/style.js'
 import App from './App.vue';
 import * as VueRouter from 'vue-router';
 import About from './About/About.vue';
@@ -44,5 +46,6 @@ const router = VueRouter.createRouter({
 
 const app = createApp(App);
 app.use(router);
+app.use(Varlet);
 
 app.mount('#app');
