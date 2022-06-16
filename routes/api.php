@@ -45,6 +45,8 @@ Route::controller(TagController::class)->prefix('tags')->group(function () {
     Route::get('/tags/{id}', function ($id) {
         return new TagResource(Tag::find($id));
     });
+
+    Route::post("/create", 'create');
 });
 
 Route::controller(LoginController::class)->prefix('login')->group(function () {
