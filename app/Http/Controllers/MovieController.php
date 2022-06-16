@@ -7,6 +7,7 @@ use App\Models\Movie;
 use App\Models\MovieTag;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class MovieController extends Controller
@@ -101,8 +102,19 @@ class MovieController extends Controller
         return response();
     }
 
-    public function getMovies()
+    public function getMovies(Request $request)
     {
-        return MovieResource::collection(Movie::all());
+        $params = $request->all();
+        $order = 'asc';
+
+        if (!empty($params['order'])) {
+            $order = $params['order'];
+        }
+
+        $movies = Movie::withoutTrashed()
+            ->orderBy('name', $order)
+            ->get();
+
+        return response(MovieResource::collection($movies));
     }
 }
