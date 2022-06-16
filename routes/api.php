@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\TagController;
 use App\Http\Resources\MovieResource;
@@ -24,22 +25,29 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::controller(MovieController::class)->group(function () {
-    Route::get('/movies', function () {
+Route::controller(MovieController::class)->prefix('movies')->group(function () {
+    Route::get('', function () {
         return MovieResource::collection(Movie::all());
     });
 
-    Route::get('/movies/{id}', function ($id) {
+    Route::get('/{id}', function ($id) {
         return new MovieResource(Movie::find($id));
     });
+
+    Route::post('/create', 'create');
 });
 
-Route::controller(TagController::class)->group(function () {
-    Route::get('/tags', function () {
+Route::controller(TagController::class)->prefix('tags')->group(function () {
+    Route::get('', function () {
         return TagResource::collection(Tag::all());
     });
 
     Route::get('/tags/{id}', function ($id) {
         return new TagResource(Tag::find($id));
     });
+});
+
+Route::controller(LoginController::class)->prefix('login')->group(function () {
+    Route::get('', 'login');
+    Route::post('/create', 'createUser');
 });
