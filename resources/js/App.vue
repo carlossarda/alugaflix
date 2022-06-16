@@ -1,3 +1,15 @@
+<template>
+<div class="areaLogo">
+    <h1>Alugaflix</h1>
+</div>
+<div class="conteudo">
+    <MenuLateral />
+    <div class="exibicaoPagina">
+        <router-view></router-view>
+    </div>
+</div>
+</template>
+
 <script>
 import MenuLateral from './MenuLateral/MenuLateral.vue';
 
@@ -12,18 +24,6 @@ export default {
   }
 }
 </script>
-
-<template>
-<div class="areaLogo">
-    <h1>Alugaflix</h1>
-</div>
-<div class="conteudo">
-    <MenuLateral />
-    <div class="exibicaoPagina">
-        <router-view></router-view>
-    </div>
-</div>
-</template>
 
 <style scoped>
 .conteudo {

@@ -1,9 +1,3 @@
-<script>
-export default {
-
-}
-</script>
-
 <template>
 <div class="menu">
     <ul>
@@ -16,6 +10,12 @@ export default {
     </ul>
 </div>
 </template>
+
+<script>
+export default {
+
+}
+</script>
 
 <style scoped>
 .menu {

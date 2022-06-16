@@ -1,14 +1,14 @@
-<script>
-export default {
-  
-}
-</script>
-
 <template>
 <div>
     about
 </div>
 </template>
+
+<script>
+export default {
+
+}
+</script>
 
 <style scoped>
 
